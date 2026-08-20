@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Huck's Rollout Control Tower</title>
+<style>
+:root{--nav:#17202a;--ink:#17202a;--muted:#667085;--line:#dfe4ea;--bg:#f5f7fa;--card:#fff;--accent:#2f80ed;--warn:#f2a93b;--ok:#35a26b;--bad:#d95b5b}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--nav);color:#fff;padding:16px 24px;position:sticky;top:0;z-index:2}.brand{display:flex;align-items:center;gap:14px}.brand h1{font-size:18px;margin:0}.brand span{font-size:12px;opacity:.72}
+nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}nav a{color:#dce4ed;text-decoration:none;padding:7px 10px;border-radius:6px;font-size:12px}nav a:hover{background:#263442}
+main{max-width:1400px;margin:24px auto;padding:0 20px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;box-shadow:0 1px 2px rgba(16,24,40,.04)}.label{font-size:12px;color:var(--muted)}.value{font-size:28px;font-weight:700;margin-top:6px}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+.section{margin-top:20px}.section h2{font-size:16px;margin:0 0 10px}.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}.bar{height:12px;background:#e9edf2;border-radius:999px;overflow:hidden}.bar>span{display:block;height:100%;background:var(--accent);width:0}.legend{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:7px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:#475467;font-weight:600;background:#fafbfc}.status{display:inline-flex;padding:4px 7px;border-radius:999px;font-size:11px;background:#eaf3ff;color:#1557a6}.status.pending{background:#fff4e3;color:#8a5a12}.note{padding:12px;background:#fff8e8;border:1px solid #f2d49a;border-radius:8px;color:#6d4c11;font-size:12px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.footer{padding:28px 0 40px;color:var(--muted);font-size:11px}.pillrow{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 8px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:11px;color:#475467}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}}@media(max-width:560px){.grid{grid-template-columns:1fr}main{padding:0 12px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div><h1>Huck's Rollout Control Tower</h1><span>Vusion Field Operations • ClickUp-backed GitHub dashboard</span></div></div><nav><a href="#health">Health</a><a href="#readiness">Readiness</a><a href="#execution">Execution</a><a href="#issues">Issues & Revisits</a><a href="#quality">CSAT / Quality</a><a href="https://app.clickup.com/14341097" target="_blank" rel="noreferrer">Open ClickUp</a></nav></header>
+<main>
+<section id="health"><div class="grid">
+<div class="card"><div class="label">Target rollout list</div><div class="value">135</div><div class="sub">Hucks Stores 135 Rollout</div></div>
+<div class="card"><div class="label">Verified task records</div><div class="value" id="taskCount">0</div><div class="sub">Retrieved from ClickUp search</div></div>
+<div class="card"><div class="label">Task status verified</div><div class="value" id="statusCount">0</div><div class="sub">Inspected directly via ClickUp task API</div></div>
+<div class="card"><div class="label">Last refresh</div><div class="value" style="font-size:18px" id="generated">—</div><div class="sub">America/Chicago</div></div>
+</div></section>
+<section class="section"><div class="note"><strong>Data boundary:</strong> the connected ClickUp API currently exposes the Hucks rollout task layer, but not the 83 custom-field values carried by each task. This version does not invent AP, material, fix, schedule, map, or CSAT values. Those sections remain explicitly pending until the custom fields are accessible.</div></section>
+<section id="readiness" class="section"><h2>Store Readiness</h2><div class="split"><div class="card"><div class="label">Custom-field readiness feed</div><div class="value">Pending</div><div class="sub">83 custom fields exist on the Hucks task model, but their values are not exposed through the current connector action.</div></div><div class="card"><div class="label">Source list</div><div class="pillrow"><span class="pill">Field / Hucks Stores 135 Rollout</span><span class="pill">2026 Installation Project Tracker</span><span class="pill">ClickUp Brain</span></div></div></div></section>
+<section id="execution" class="section"><h2>Installation Execution</h2><div class="card"><table><thead><tr><th>Store</th><th>ClickUp task</th><th>Status</th><th>Last updated</th></tr></thead><tbody id="stores"></tbody></table></div></section>
+<section id="issues" class="section"><h2>Issues & Revisits</h2><div class="card"><div class="label">Issue / revisit fields</div><div class="value">Pending</div><div class="sub">No issue or revisit custom-field values were exposed by the current ClickUp connector.</div></div></section>
+<section id="quality" class="section"><h2>CSAT / Quality</h2><div class="card"><div class="label">CSAT / White Glove feed</div><div class="value">Pending</div><div class="sub">CSAT source is identified in the rollout design, but values are not available through the current connector action.</div></div></section>
+<div class="footer">Generated from ClickUp workspace 14341097. Dashboard structure follows the locked Hucks Control Tower specification. Store rows link directly to their ClickUp tasks. GitHub is the stable hosting layer.</div>
+</main>
+<script>
+const data={
+ generated:"2026-08-20 10:09 AM CT",
+ inspectedStatus:"installation scheduled",
+ stores:[
+  ["Hucks # 312","869ebxn1f","installation scheduled","1787061685988"],["Hucks # 264","869ebxn30","installation scheduled","1787163347881"],["Hucks # 267","869ebxmxv","installation scheduled","1787164885025"],["Hucks # 281","869ebxn3a","installation scheduled","1787163395172"],["Hucks # 366","869ebxn3c","installation scheduled",""],["Huck's 100","869ebxmy9","installation scheduled",""],["Hucks # 367","869ebxn3q","installation scheduled",""],["Hucks # 239","869ebxn3p","installation scheduled",""],["Hucks # 351","869ebxmya","installation scheduled","1787165027753"],["Hucks # 343","869ebxmy3","installation scheduled","1787164991114"],["Hucks # 270","869ebxmy1","installation scheduled",""],["Hucks # 161","869ebxn3t","installation scheduled",""],["Hucks # 310","869ebxn3f","installation scheduled","1787163399692"],["Hucks # 247","869ebxn48","installation scheduled",""],["Hucks # 175","869ebxn8c","installation scheduled",""],["Hucks # 291","869ebxn7j","installation scheduled",""],["Hucks # 308","869ebxn6q","installation scheduled",""],["Hucks # 265","869ebxn66","installation scheduled",""],["Hucks # 114","869ebxn4n","installation scheduled",""],["Hucks # 374","869ebxn18","installation scheduled",""],["Hucks # 372","869ebxn1d","installation scheduled",""],["Hucks # 210","869ebxn0a","installation scheduled","1787061685438"],["Hucks # 277","869ebxn0f","installation scheduled","1787061685424"],["Hucks # 250","869ebxn00","installation scheduled",""],["Hucks # 355","869ebxmzj","installation scheduled",""],["Hucks # 212","869ebxn81","installation scheduled",""],["Hucks # 307","869ebxn7b","installation scheduled",""],["Hucks # 397","869ebxn78","installation scheduled","1787061688325"],["Hucks # 139","869ebxn6w","installation scheduled",""],["Hucks # 376","869ebxn5x","installation scheduled",""],["Hucks # 111","869ebxn52","installation scheduled",""],["Hucks # 393","869ebxn62","installation scheduled",""],["Hucks # 388","869ebxn4b","installation scheduled",""]
+ ]};
+document.getElementById('taskCount').textContent=data.stores.length+'+';
+document.getElementById('statusCount').textContent=data.stores.length;
+document.getElementById('generated').textContent=data.generated;
+const body=document.getElementById('stores');
+data.stores.forEach(s=>{const tr=document.createElement('tr');const d=s[3]?new Date(Number(s[3])).toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Chicago'}):'Not returned';tr.innerHTML=`<td><strong>${s[0]}</strong></td><td><a href="https://app.clickup.com/t/${s[1]}" target="_blank" rel="noreferrer">Open task</a></td><td><span class="status">${s[2]}</span></td><td>${d}</td>`;body.appendChild(tr)});
+</script>
+</body></html>
